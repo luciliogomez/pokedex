@@ -27,12 +27,13 @@ export default {
             ],
             link: 'starting',
             offsetSearch:0,
-            limitSearch:400
+            limitSearch:200
         }
     },
     methods:{
         // Load POkemons
          loadPokemons: function(rota){
+			this.$store.commit('eraseSearchText');
 			this.clearPokemonList()
                 // console.log("LISTA STORE: "+this.$store.state.pokemons);
                 // console.log(this.$store.state.count)
@@ -88,7 +89,7 @@ export default {
                                 console.log(error);
                             });
                         }
-                        console.log(response.data);
+                        // console.log(response.data);
                         // console.log(results);
 
                     })
@@ -113,7 +114,7 @@ export default {
         },
         loadMore: function(){
             if(this.$store.state.searchText != ""){
-                console.log(this.$store.state.searchText);
+                // console.log(this.$store.state.searchText);
                 this.loadMoreSearchPokemon(this.$store.state.searchText)
             }else{
                 let rota = this.$store.state.link;
@@ -159,7 +160,7 @@ export default {
                                 console.log(error);
                             });
                         }
-                        console.log(response.data);
+                        // console.log(response.data);
                         // console.log(results);
 
                     })
@@ -178,14 +179,16 @@ export default {
 
         // End LoadMore
     searchPokemon: function(searchText){
-                console.log("----OFFSET:"+this.offsetSearch)
+                // console.log("----OFFSET:"+this.offsetSearch)
+                // console.log("LIMIT:"+this.limitSearch)
                 this.offsetSearch = 0;
                 this.clearPokemonList()
+                // console.log("ACTUAL LIST:"+this.pokemons)
                 let pokemons = this.pokemons;
                 // let next = '';
                      api.get("/pokemon/?offset="+this.offsetSearch+"&limit="+this.limitSearch).
                     then( (response) => {
-                        console.log("LIMIT:"+this.limitSearch)
+                        // console.log("LIMIT:"+this.limitSearch)
                         let results = response.data.results;
                         // next = response.data.next;
                         // this.link = next;
@@ -198,9 +201,9 @@ export default {
                                 then((response)=>{
                                         let character = response.data;
                                         // var pathern = new RegExp('^' + character.name, 'i');
-                                        console.log("TESTING: " +character.name)
+                                        // console.log("TESTING: " +character.name)
                                         if( (character.name.startsWith(searchText)) ){
-                                                console.log("FOUND: " +character.name)
+                                                // console.log("FOUND: " +character.name)
                                                 // if(character.name.)
                                                 let l_id =character.id;
                                                 let l_name =character.name;
@@ -230,7 +233,7 @@ export default {
                                 console.log(error);
                             });
                         }
-                        console.log(response.data);
+                        // console.log(response.data);
                     })
                     .catch(function(error){
                       console.log(error);
@@ -242,13 +245,16 @@ export default {
     // END SEARCH POKEMON METHOD
     
     loadMoreSearchPokemon: function(searchText){
-        console.log("----OFFSET:"+this.offsetSearch)
+        // console.log("----OFFSET:"+this.offsetSearch)
+        // console.log("ACTUAL LIST:"+this.pokemons)
+        // console.log("LIMIT:"+this.limitSearch)        
+                
                 // this.clearPokemonList()
                 // let pokemons = this.pokemons;
                 // let next = '';
                      api.get("/pokemon/?offset="+this.offsetSearch+"&limit="+this.limitSearch).
                     then( (response) => {
-                        console.log("LIMIT:"+this.limitSearch)
+                        // console.log("LIMIT:"+this.limitSearch)
                         let results = response.data.results;
                         // next = response.data.next;
                         // this.link = next;
@@ -261,9 +267,9 @@ export default {
                                 then((response)=>{
                                         let character = response.data;
                                         // var pathern = new RegExp('^' + character.name, 'i');
-                                        console.log("TESTING: " +character.name)
+                                        // console.log("TESTING: " +character.name)
                                         if( (character.name.startsWith(searchText)) ){
-                                                console.log("FOUND: " +character.name)
+                                                // console.log("FOUND: " +character.name)
                                                 // if(character.name.)
                                                 let l_id =character.id;
                                                 let l_name =character.name;
@@ -293,7 +299,7 @@ export default {
                                 console.log(error);
                             });
                         }
-                        console.log(response.data);
+                        // console.log(response.data);
                     })
                     .catch(function(error){
                       console.log(error);
@@ -304,44 +310,67 @@ export default {
     },
 
 
-    clearPokemonList:function(){
+    clearPokemonList: function(){
         this.pokemons = [];
-    }
+    },
+
+    clearNextLink: function(){
+        this.$store.commit('setLink',"");
+    },
+    clearSearchParams: function(){
+        this.offsetSearch = 0;
+        
+    },
+
 
 
     },
     
     created: function(){
+        this.clearPokemonList()
+        this.clearNextLink();
+        this.clearSearchParams();
         // if(this.$store.state.link != ''){
         //     this.loadPokemons(this.$store.state.link);
         // }else{
-            // this.$store.commit('eraseSearchText');
+             this.$store.commit('eraseSearchText');
             
             // this.loadPokemons("/pokemon/");
         // }
         
-         console.log("LINK END END: "+this.$store.state.link);
-        
+        //  console.log("LINK END END: "+this.$store.state.link);
+        // console.log("CREATED CREATED CREATED:")
+        // console.log("ACTUAL LIST:"+this.pokemons)
     },
     components:{
         PokemonCharacter
     }
     ,
     mounted:function(){
-		
+		this.$store.commit('eraseSearchText');
         this.clearPokemonList()
+        this.clearNextLink();
+        this.clearSearchParams();
+        // console.log("MOUNTED  MOUNTED MOUNTED")
+        // console.log("ACTUAL LIST:"+this.pokemons)
         // if(this.$store.state.link != ''){
         //     this.loadPokemons(this.$store.state.link);
         // }else{
             this.loadPokemons("/pokemon/");
+            // console.log("ACTUAL LIST:"+this.pokemons)
         // }
-    },
 
+        
+    },
     watch:{
         '$store.state.searchText':function(){
             // store.state.searchText;
-            console.log("ON STORE:"+this.$store.state.searchText);
-            this.searchPokemon(this.$store.state.searchText);
+            if(this.$store.state.searchText ==""){
+                console.log("EMPTY SEARCH TEXT");    
+            }else{
+                this.searchPokemon(this.$store.state.searchText);
+            }
+            
         },
 
         $route() {

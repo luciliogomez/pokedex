@@ -47,7 +47,9 @@ export default new Vuex.Store({
     }
     ,
     eraseSearchText(state){
-      state.searchText = ""
+		// console.log("BEFORE ERASE: "+state.searchText);
+		state.searchText = ""
+		// console.log("AFTER ERASE: "+state.searchText);
     }
   },
   actions: {

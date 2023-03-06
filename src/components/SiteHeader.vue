@@ -9,7 +9,8 @@
         </div>
         <div class="search-bar">
             <div class="search-input" >
-                <input type="text" v-model="searchText" v-on:keyup.enter="$emit('search',searchText)"  placeholder="Nome ou numero">
+                <input type="text" v-model="searchText" v-on:keyup.enter="$emit('search',searchText)" 
+                 placeholder="Nome">
                 <i class="fas fa-search"></i>
             </div>
         </div>
@@ -34,6 +35,7 @@ export default {
     watch:{
         searchText(){
             console.log(this.searchText);
+            
         }
     }
 }

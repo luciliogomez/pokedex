@@ -28,6 +28,7 @@ export default {
       searchText = searchText.replace(/(\r\n|\n|\r)/gm,"");
       console.log("Searched: -"+searchText+" -");
       this.$store.commit('setSearchText',searchText);
+      // this.$router.push({path:"/"});
       // this.$router.push({ path: '/search', query: { q: searchText } })
     }
   }
