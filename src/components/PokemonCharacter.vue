@@ -3,7 +3,8 @@
                 <router-link :to="{ name: 'character', params: { id:pokemon.id } }">
                 <div class="pic">
                     <!-- <img :src="getImg(pokemon.id)" alt=""> -->
-                    <img :src="pokemon.sprite" alt="">
+                    <img v-if="pokemon.sprite" :src="pokemon.sprite" alt="">
+                    <img v-else :src="getDefaultImg()" alt="">
                 </div>
                 </router-link>
                 <div class="info">
@@ -40,6 +41,9 @@ export default {
     methods:{
         getImg(id) {
             return require("../assets/pokemon/" + id + ".png");
+        },
+        getDefaultImg() {
+            return require("../assets/pokemon/poke-shadow.png");
         },
         getType(type){
             return type?type.toUpperCase():"Unknown";
@@ -162,6 +166,40 @@ export default {
     .caracter .info .types{
         display:flex;
         justify-content: flex-start;
+    }
+
+}
+@media(min-width:1440px){
+     .caracter{
+        padding:5px;
+        width:19%;
+        margin-bottom:40px;
+        margin-right:1.001%;
+    }
+    .caracter a .pic{  
+            min-height:30vh;
+        }
+    .caracter a .pic img{
+        width:80%;
+        /* margin:auto; */
+        height: 27vh;
+    }
+
+}
+@media(min-width:2000px){
+     .caracter{
+        padding:5px;
+        width:19%;
+        margin-bottom:40px;
+        margin-right:1.001%;
+    }
+    .caracter a .pic{  
+            min-height:30vh;
+        }
+    .caracter a .pic img{
+        width:80%;
+        /* margin:auto; */
+        height: 27vh;
     }
 
 }

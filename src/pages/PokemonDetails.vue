@@ -59,9 +59,10 @@ export default {
     {
         return {
             pokemon :{
-                id:'1',
+                    id:'1',
                     name:'Bulbasaur',
                     number:'1',
+                    img: this.getDefaultImg(),
                     types:[
                         {name:"grass"},
                         {name:"poison"}
@@ -74,6 +75,9 @@ export default {
     methods:{
         getImg(id) {
             return require("../assets/pokemon/" + id + ".png");
+        },
+        getDefaultImg() {
+            return require("../assets/pokemon/poke-shadow.png");
         },
         getType(type){
             return type.toUpperCase();

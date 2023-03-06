@@ -31,6 +31,9 @@ export default {
         }
     },
     methods:{
+        getDefaultImg() {
+            return require("../assets/pokemon/poke-shadow.png");
+        },
         // Load POkemons
          loadPokemons: function(rota){
 			this.$store.commit('eraseSearchText');
@@ -437,6 +440,23 @@ export default {
         margin-top:50px;
         flex-wrap: wrap;
     }
+
+
+}
+
+@media(min-width:1440px){
+     .caracters{
+        width:90%;
+        flex-direction:row;
+        justify-content: center;
+        align-items:flex-start;
+        margin-top:50px;
+        flex-wrap: wrap;
+    }   
+
+}
+
+@media(min-width:2000px){
 
 }
 </style>

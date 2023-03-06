@@ -133,5 +133,8 @@ export default {
         }
 
     }
+    @media(min-width:2000px){
+
+    }
     
 </style>
